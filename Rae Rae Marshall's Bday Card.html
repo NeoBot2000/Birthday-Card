@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday 💛</title>
+
+<style>
+
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+ background-image: url("teddy.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+  /* CARD */
+  .card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(6px);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    animation: float 3s ease-in-out infinite;
+    max-width: 350px;
+  }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  h1 {
+    color: #ff69b4;
+  }
+
+  p {
+    color: #444;
+  }
+
+  .heart {
+    font-size: 24px;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+  }
+
+  button {
+    margin-top: 20px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    background: #ff69b4;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  button:hover {
+    background: #ffd700;
+    color: black;
+  }
+
+  /* PHONE */
+  .phone {
+  display: none;
+  width: 320px;
+  height: 600px;
+  border-radius: 30px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  overflow: hidden;
+  flex-direction: column;
+
+  /* NEW wallpaper */
+  background: url("Neo Rae Moments.jpeg");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+ .chat {
+  flex: 1;
+  padding: 12px;
+  overflow-y: auto;
+
+  background: rgba(242, 242, 247, 0.75);
+  backdrop-filter: blur(1px);
+}
+
+.message {
+  max-width: 75%;
+  margin: 8px;
+  padding: 10px 14px;
+  border-radius: 18px;
+  font-size: 14px;
+  animation: pop 0.2s ease;
+  display: inline-block;
+  clear: both;
+}
+
+/* YOUR messages (right side blue like iMessage) */
+.me {
+  background: #007aff;
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 5px;
+}
+
+/* typing bubble */
+.typing {
+  background: #e5e5ea;
+  color: #333;
+  font-style: italic;
+}
+  .me {
+    background: #ffd700;
+    margin-left: auto;
+    border-bottom-right-radius: 5px;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(10px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+  
+  @keyframes pop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+  <h1>Happy Birthday 💛🌸</h1>
+  <p>
+    To my amazing Rae Rae Marshall,<br><br>
+    I made something special for you… 🥹💗
+  </p>
+  <div class="heart">💛💗</div>
+  <button onclick="openChat()">Open it 🎁</button>
+</div>
+
+<div class="phone" id="phone">
+  <div class="header" align="center">💛Rae Rae Marshall 💗</div>
+  <div class="chat" id="chat"></div>
+</div>
+
+<script>
+  function openChat() {
+    document.getElementById("card").style.display = "none";
+    document.getElementById("phone").style.display = "flex";
+    startChat();
+  }
+
+  const messages = [
+    "heyyyy 👀",
+	
+    "happy birthdayyyy 🥳💛",
+    "I hope you're smiling right now",
+    "because today is YOUR day 🌸",
+    "You’re literally one of the best people in my life",
+    "and I’m so lucky to have you 🥹",
+    "like actually… what did I do to deserve you 😭💗",
+    "I hope this year gives you everything you deserve ✨",
+    "and more happiness than you can handle 💛",
+    "love you always 💌"
+  ];
+
+  let index = 0;
+
+  function startChat() {
+    sendNextMessage();
+  }
+
+  function createTypingIndicator() {
+  const chat = document.getElementById("chat");
+
+  const typing = document.createElement("div");
+  typing.className = "message typing";
+  typing.id = "typing";
+
+  typing.innerText = "typing";
+
+  chat.appendChild(typing);
+  chat.scrollTop = chat.scrollHeight;
+
+  let dots = 0;
+  const interval = setInterval(() => {
+    dots = (dots + 1) % 4;
+    typing.innerText = "typing" + ".".repeat(dots);
+  }, 400);
+
+  return { typing, interval };
+}
+
+  function sendNextMessage() {
+    if (index >= messages.length) return;
+
+    const chat = document.getElementById("chat");
+
+    // show typing first
+    const { typing, interval } = createTypingIndicator();
+
+    setTimeout(() => {
+      clearInterval(interval);
+      typing.remove();
+
+      const msg = document.createElement("div");
+      msg.className = "message me";
+      msg.innerText = messages[index];
+
+      chat.appendChild(msg);
+      chat.scrollTop = chat.scrollHeight;
+
+      index++;
+
+      setTimeout(sendNextMessage, 900);
+    }, 1200);
+  }
+</script>
+
+</body>
+</html>
